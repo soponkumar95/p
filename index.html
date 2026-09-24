@@ -84,7 +84,7 @@
             gap: 24px;
         }
 
-        /* Logo Fix: দাগ লোগোর গায়ে ফিট থাকবে এবং ইমেজ বড় দেখাবে */
+        /* Logo */
         .logo {
             height: 52px;
             width: auto;
@@ -104,7 +104,6 @@
         .logo img {
             height: 100%;
             max-height: 42px;
-            /* মূল লোগো ইমেজটি এখন বড় দেখাবে */
             width: auto;
             object-fit: contain;
             display: block;
@@ -311,7 +310,7 @@
 
         /* Features */
         .section {
-            padding: 70px 0
+            padding: 70px 0;
         }
 
         .center {
@@ -574,6 +573,46 @@
             border-bottom: 0
         }
 
+        /* Bank / Payment Methods Section */
+        .bank-section {
+            padding-top: 10px;
+            padding-bottom: 40px;
+        }
+
+        .bank-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            align-items: center;
+        }
+
+        .bank-card {
+            background: #fff;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid #e2e2e2;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .bank-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .08);
+        }
+
+        .bank-card img {
+            width: 100%;
+            height: auto;
+            max-height: 180px;
+            object-fit: contain;
+            border-radius: 10px;
+            display: block;
+        }
+
         /* Countries */
         .countries {
             background: #fff;
@@ -790,9 +829,10 @@
             color: var(--lime)
         }
 
+
         /* ========================================================
-   RESPONSIVE MEDIA QUERIES
-   ======================================================== */
+           RESPONSIVE MEDIA QUERIES
+           ======================================================== */
 
         @media(max-width:992px) {
             .feature-grid {
@@ -815,6 +855,17 @@
 
             .footer-grid {
                 grid-template-columns: 1fr 1fr
+            }
+
+            .bank-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .bank-card:last-child {
+                grid-column: span 2;
+                max-width: 500px;
+                margin: 0 auto;
+                width: 100%;
             }
         }
 
@@ -883,7 +934,7 @@
                 padding: 0 16px
             }
 
-            /* Mobile Logo size: বর্ডার টাইট ও ইমেজ স্পষ্ট থাকবে */
+            /* Mobile Logo size */
             .logo {
                 height: 44px;
                 padding: 3px 8px;
@@ -931,6 +982,17 @@
 
             .feature-grid {
                 grid-template-columns: 1fr
+            }
+
+            /* Bank grid in Mobile: 1 column */
+            .bank-grid {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            .bank-card:last-child {
+                grid-column: span 1;
+                max-width: 100%;
             }
 
             .country-grid {
@@ -1212,11 +1274,20 @@
             </div>
         </section>
 
-        <!-- Payment Methods Banner Image -->
-        <section class="section" style="padding-top:0;">
-            <div class="container center">
-                <img src="images/payment-methode.jpeg" alt="Payment Methods"
-                    style="max-width:640px;width:100%;border-radius:12px;">
+        <!-- Bank / Payment Methods (3 Images Fixed & Responsive) -->
+        <section class="bank-section">
+            <div class="container">
+                <div class="bank-grid">
+                    <div class="bank-card">
+                        <img src="images/bkash.jpeg" alt="bKash Payment">
+                    </div>
+                    <div class="bank-card">
+                        <img src="images/nagad.jpeg" alt="Nagad Payment">
+                    </div>
+                    <div class="bank-card">
+                        <img src="images/pubali.jpeg" alt="Pubali Bank Payment">
+                    </div>
+                </div>
             </div>
         </section>
 
