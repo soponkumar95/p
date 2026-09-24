@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TheLocalPay | Global Payments</title>
+<style>
+:root{
+  --green:#3b50a1;
+  --green-2:#0d2f19;
+  --lime:#c8f51b;
+  --lime-2:#a9dc00;
+  --ink:#222;
+  --muted:#747474;
+  --bg:#f1f1f1;
+  --white:#fff;
+  --border:#e8e8e8;
+  --shadow:0 10px 30px rgba(0,0,0,.09);
+  --radius:12px;
+  --max:1280px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  font-size:20px;
+}
+a{text-decoration:none;color:inherit}
+button{font:inherit;border:0;cursor:pointer}
+.container{width:min(calc(100% - 48px),var(--max));margin:auto}
+.nav{
+  height:70px;background:#252525;color:#fff;display:flex;align-items:center;
+  position:sticky;top:0;z-index:50;box-shadow:0 3px 15px rgba(0,0,0,.08)
+}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.logo{
+  width:85px;height:50px;border:2px solid var(--lime);border-radius:5px;
+  display:flex;align-items:center;justify-content:center;color:var(--lime);
+  font-weight:700;letter-spacing:-1px;font-size:22px
+}
+.logo span{color:#fff}
+.nav-links{display:flex;gap:27px;align-items:center;color:#ddd;font-size:17px}
+.nav-links a:hover{color:var(--lime)}
+.nav-actions{display:flex;gap:10px}
+.btn{
+  padding:9px 20px;border-radius:22px;font-weight:700;font-size:18px;
+  transition:.2s ease;display:inline-flex;align-items:center;justify-content:center;height: 55px;
+}
+.btn-dark{background:#353535;color:#fff}
+.btn-lime{background:var(--lime);color:#15250e}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.04)}
+.menu{display:none;color:#fff;font-size:22px;background:transparent}
+
+.hero{
+  margin-top:18px;background:var(--green);border-radius:13px;overflow:hidden;color:#fff;
+  position:relative;min-height:330px;
+}
+.hero:after{
+  content:"";position:absolute;width:430px;height:430px;border:13px solid rgba(197,245,27,.75);
+  border-radius:50%;right:-140px;top:-260px;transform:rotate(18deg)
+}
+.hero-main{min-height:270px;padding:58px 50px;display:flex;align-items:center;justify-content:space-between;gap:40px;position:relative;z-index:1}
+.hero-copy{max-width:520px}
+.eyebrow{font-size:12px;letter-spacing:1.8px;text-transform:uppercase;color:var(--lime);font-weight:800;margin-bottom:12px}
+h1{font-size:38px;line-height:1.06;margin:0 0 18px;letter-spacing:-1.5px}
+.hero p{color:#d9e5db;line-height:1.65;max-width:470px}
+.hero-buttons{display:flex;gap:10px;margin-top:22px}
+.payment-card{
+  width:350px;background:#fff;color:#222;border-radius:9px;padding:19px;
+  box-shadow:0 20px 45px rgba(0,0,0,.18);position:relative
+}
+.payment-card .pay-head{font-weight:800;font-size:15px;margin-bottom:12px}
+.pay-row{display:flex;justify-content:space-between;align-items:center;margin:8px 0;font-size:14px;color:#777}
+.pay-total{font-size:20px;font-weight:900;color:#222}
+.pay-pill{background:var(--lime);padding:7px 12px;border-radius:7px;font-weight:800;font-size:12px}
+.hero-stats{
+  height:78px;background:#262626;display:grid;grid-template-columns:repeat(3,1fr);align-items:center;padding:0 35px
+}
+.stat{display:flex;align-items:center;gap:10px}
+.stat strong{font-size:22px;color:var(--lime)}
+.stat span{font-size:13px;color:#fff;opacity:.85}
+
+.section{padding:82px 0}
+.center{text-align:center}
+.section-title{font-size:21px;margin:0 0 10px;letter-spacing:-.4px}
+.section-subtitle{max-width:650px;margin:0 auto;color:var(--muted);font-size:16px;line-height:1.7}
+
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:30px}
+.feature{
+  background:#fff;border-radius:10px;padding:24px;min-height:145px;border:1px solid #ededed
+}
+.feature.dark{background:var(--green);color:#fff}
+.feature h3{font-size:22px;margin:0 0 10px}
+.feature p{font-size:16px;line-height:1.7;color:#777;margin:0}
+.feature.dark p{color:#d4dfd5}
+.icon{
+  width:30px;height:30px;border-radius:50%;background:var(--lime);
+  display:grid;place-items:center;margin-top:18px;color:#1c2b15;font-weight:900;font-size:16px
+}
+.flag{
+  width: 50px; 
+  height:50px;
+}
+.gateway-wrap{display:grid;grid-template-columns:1fr 130px 1fr;gap:20px;align-items:center;margin-top:45px}
+.gateway-col{display:grid;gap:11px}
+.gateway-item{background:#fff;border-radius:20px;padding:10px 15px;font-size:22px;display:flex;align-items:center;gap:8px;box-shadow:0 2px 6px rgba(0,0,0,.03)}
+.gateway-item i{width:30px;height:30px;border-radius:50%;background:var(--lime);display:grid;place-items:center;font-style:normal;font-weight:900}
+.center-logo{
+  width:130px;height:75px;background:#242424;border-radius:11px;color:var(--lime);
+  border:1px solid #444;display:grid;place-items:center;font-size:25px;font-weight:900;
+  box-shadow:0 15px 35px rgba(0,0,0,.15)
+}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:70px;align-items:center}
+.visual{
+  min-height:240px;background:#fff;border-radius:14px;position:relative;overflow:hidden;box-shadow:var(--shadow);
+  display:flex;align-items:center;justify-content:center
+}
+.visual:before,.visual:after{
+  content:"";position:absolute;border:34px solid var(--lime);width:260px;height:180px;border-radius:45%;
+  transform:rotate(-25deg);opacity:.95
+}
+.visual:after{width:150px;height:230px;border-color:#28b94d;transform:rotate(18deg);left:-25px;top:-50px}
+.receipt{
+  position:relative;z-index:2;background:#fff;border-radius:10px;padding:17px;width:205px;
+  box-shadow:0 12px 30px rgba(0,0,0,.16);margin-left:55px
+}
+.receipt b{font-size:20px}
+.receipt small{display:block;color:#777;margin-top:6px}
+.arrow{position:absolute;right:-10px;top:-10px;width:34px;height:34px;border-radius:50%;background:var(--lime);display:grid;place-items:center;font-weight:900}
+
+.copy h2{font-size:25px;margin:0 0 12px}
+.copy p{color:#777;line-height:1.8;font-size:16px}
+.copy .btn{margin-top:15px}
+
+.table-wrap{margin-top:34px;overflow:auto;border-radius:12px}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:16px;overflow:hidden;border-radius:12px}
+th,td{padding:14px 15px;text-align:left;border-bottom:1px solid #ececec}
+th{background:#fff;font-size:16px}
+th:nth-child(2){background:var(--green);color:#fff}
+td:nth-child(2){background:#fbfff0}
+table tr:last-child td{border-bottom:0}
+
+.countries{background:#fff;border-radius:14px;padding:30px;margin-top:40px}
+.country-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:25px}
+.country{border:1px solid #e8e8e8;border-radius:20px;padding:9px 10px;text-align:center;font-size:16px;background:#fff}
+
+.code-section{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.code{
+  background:#222;color:#c7f51b;border-radius:10px;padding:25px;font-family:"SFMono-Regular",Consolas,monospace;
+  font-size:16px;line-height:1.65;box-shadow:var(--shadow);overflow:auto
+}
+.cta{
+  background:var(--green);color:#fff;border-radius:13px;padding:45px 55px;position:relative;overflow:hidden;
+  text-align:center;margin-top:35px
+}
+.cta:before,.cta:after{content:"";position:absolute;width:230px;height:230px;border:7px solid rgba(198,245,27,.65);border-radius:45%;top:-125px;left:-40px;transform:rotate(30deg)}
+.cta:after{left:auto;right:-80px;top:45px}
+.cta>*{position:relative;z-index:1}
+.cta h2{margin:0 0 10px;font-size:25px}
+.cta p{color:#d8e6d9;font-size:14px}
+.cta .btn{margin:10px 4px}
+
+.social{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:25px}
+.social a{background:#fff;border-radius:10px;padding:22px;text-align:center;font-size:14px;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.social a:last-child{background:var(--lime)}
+
+.faq{max-width:760px;margin:35px auto 0}
+.faq-item{background:#fff;border-radius:11px;margin-bottom:10px;overflow:hidden}
+.faq-q{width:100%;background:#fff;padding:17px 20px;text-align:left;font-weight:800;font-size:18px;display:flex;justify-content:space-between;align-items:center}
+.faq-q span{font-size:17px}
+.faq-a{display:none;padding:0 20px 18px;color:#777;font-size:14px;line-height:1.7}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-q span{transform:rotate(45deg)}
+
+.bottom-bar{background:#fff;padding:22px 0;margin-top:70px}
+.bottom-inner{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.bottom-inner strong{font-size:15px}
+
+footer{background:#222;color:#aaa;padding:35px 0;font-size:14px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:35px}
+footer h4{color:#fff;margin:0 0 13px}
+footer a{display:block;margin:8px 0}
+footer a:hover{color:var(--lime)}
+
+@media(max-width:900px){
+  .nav-links{display:none}
+  .menu{display:block}
+  .hero-main{padding:45px 32px}
+  .payment-card{width:300px}
+  .split,.code-section{gap:35px}
+  .gateway-wrap{grid-template-columns:1fr 100px 1fr}
+  .center-logo{width:100px}
+}
+@media(max-width:700px){
+  .container{width:min(calc(100% - 28px),var(--max))}
+  .nav-actions .btn-dark{display:none}
+  .hero-main{display:block;padding:35px 25px}
+  h1{font-size:31px}
+  .payment-card{width:100%;margin-top:30px}
+  .hero-stats{padding:0 15px}
+  .stat{gap:5px}.stat strong{font-size:18px}.stat span{font-size:12px}
+  .section{padding:58px 0}
+  .feature-grid{grid-template-columns:1fr}
+  .gateway-wrap{grid-template-columns:1fr}
+  /* .center-logo{margin:auto;order:0} */
+  .gateway-col{order:1}
+  .split,.code-section{grid-template-columns:1fr}
+  .split .visual{order:2}
+  .country-grid{grid-template-columns:repeat(2,1fr)}
+  .social{grid-template-columns:repeat(2,1fr)}
+  .social a:last-child{grid-column:span 2}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .bottom-inner{display:block;text-align:center}
+  .bottom-inner .btn{margin-top:12px}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="logo" href="www.thelocalpay.org"> <img width="80px",height="20px" src="images/logo.png" alt=""> </a>
+    <nav class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#gateway">Payment Methods</a>
+      <a href="#comparison">Compare</a>
+      <a href="#countries">Countries</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-dark" href="https://t.me/thelocalpay">Telegram</a>
+      <a class="btn btn-lime" href="#">Contact US</a>
+    </div>
+    <button class="menu" aria-label="Menu">☰</button>
+  </div>
+</header>
+
+<main>
+<section class="container hero">
+  <div class="hero-main">
+    <div class="hero-copy">
+      <div class="eyebrow">One payment platform</div>
+      <h1>Start Global Payments in One Day with TheLocalPay</h1>
+      <p>Accept online payments from customers around the world with a simple, flexible payment gateway built for modern businesses.</p>
+      <div class="hero-buttons">
+        <a class="btn btn-lime" href="#start">Contact US</a>
+        <a class="btn btn-dark" href="https://t.me/thelocalpay">Join Telegram</a>
+      </div>
+    </div>
+    <div class="payment-card">
+      <div class="pay-head">Your payment</div>
+      <div class="pay-row"><span>Customer</span><b>Alex Morgan</b></div>
+      <div class="pay-row"><span>Order ID</span><b>#AP-87954</b></div>
+      <div class="pay-row"><span>Amount</span><b class="pay-total">$3,618</b></div>
+      <div class="pay-row"><span>Status</span><span class="pay-pill">Paid</span></div>
+      <div class="pay-row"><span>Payment method</span><b>Visa •••• 6975</b></div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><strong>100+</strong><span>local & global<br>payment methods</span></div>
+    <div class="stat"><strong>24/7</strong><span>technical<br>support</span></div>
+    <div class="stat"><strong>$3m+</strong><span>transactions<br>processed</span></div>
+  </div>
+</section>
+
+
+<section class="section" id="features">
+<div class="container">
+  <div class="center">
+    <h2 class="section-title">A Smarter Way to Accept Online Payments</h2>
+    <p class="section-subtitle">Everything your business needs to collect payments, manage transactions and scale across markets from one place.</p>
+  </div>
+  <div class="feature-grid">
+    <article class="feature"><h3>Multiple payment options</h3><p>Cards, wallets and local payment methods in a single integration.</p><div class="icon">↗</div></article>
+    <article class="feature"><h3>Built for high-volume</h3><p>Reliable payment processing designed to grow with your business.</p><div class="icon">↗</div></article>
+    <article class="feature dark"><h3>Global payment coverage</h3><p>Reach customers in multiple countries without rebuilding your checkout.</p><div class="icon">↗</div></article>
+    <article class="feature"><h3>Customer-first checkout</h3><p>Simple payment experiences that reduce friction and help conversion.</p><div class="icon">↗</div></article>
+    <article class="feature"><h3>Smart transaction management</h3><p>Monitor payment activity and keep your operations organized.</p><div class="icon">↗</div></article>
+    <article class="feature"><h3>24/7 dedicated support</h3><p>Get help when you need it with responsive payment support.</p><div class="icon">↗</div></article>
+  </div>
+</div>
+</section>
+
+<section class="section" id="gateway">
+<div class="container">
+  <div class="center">
+    <h2 class="section-title">Difficulty in Accepting Payments?</h2>
+    <p class="section-subtitle">High fees, confusing integrations, country restrictions? TheLocalPay brings the pieces together.</p>
+  </div>
+  <div class="gateway-wrap">
+    <div class="gateway-col">
+      <div class="gateway-item"><i>✓</i>International cards</div>
+      <div class="gateway-item"><i>✓</i>Visa & Mastercard</div>
+      <div class="gateway-item"><i>✓</i>Local payment methods</div>
+      <div class="gateway-item"><i>✓</i>Mobile wallets</div>
+    </div>
+    <div class="center-logo">Local Pay</div>
+    <div class="gateway-col">
+      <div class="gateway-item"><i>✓</i>Multi-currency checkout</div>
+      <div class="gateway-item"><i>✓</i>Fast settlements</div>
+      <div class="gateway-item"><i>✓</i>API integration</div>
+      <div class="gateway-item"><i>✓</i>Fraud protection</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section">
+<div class="container split">
+  <div class="visual">
+    <div class="receipt"><small>Payment received</small><b>$1,640</b><small>Visa •••• 4291</small><div class="arrow">→</div></div>
+  </div>
+  <div class="copy">
+    <h2>Speed Matters</h2>
+    <p>Customers expect fast, familiar payment experiences. TheLocalPay keeps checkout simple and helps businesses process payments without unnecessary complexity.</p>
+    <a class="btn btn-lime" href="#start">Explore payments →</a>
+  </div>
+</div>
+</section>
+
+<section class="section">
+<div class="container split">
+  <div class="copy">
+    <h2>Flexibility Built-In</h2>
+    <p>Choose payment methods, currencies and integration options that fit your business. Start small, then expand as your customer base grows.</p>
+    <a class="btn btn-dark" href="#start">View solutions</a>
+  </div>
+  <div class="visual">
+    <div class="receipt"><small>New payment</small><b>$2,246</b><small>Completed successfully</small><div class="arrow">→</div></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="comparison">
+<div class="container">
+  <h2 class="section-title">TheLocalPay vs Other Payment Gateways</h2>
+  <p class="section-subtitle" style="margin-left:0">Compare common payment gateway capabilities and choose an integration model that fits your operation.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Feature</th><th>TheLocalPay</th><th>Other gateways</th></tr></thead>
+      <tbody>
+        <tr><td>Cards</td><td>✓ Global card support</td><td>Limited by region</td></tr>
+        <tr><td>Local methods</td><td>✓ Multiple local options</td><td>Varies by provider</td></tr>
+        <tr><td>Integration</td><td>✓ Simple API</td><td>Complex setup</td></tr>
+        <tr><td>Settlement</td><td>✓ Flexible options</td><td>Provider dependent</td></tr>
+        <tr><td>Multi-currency</td><td>✓ Supported</td><td>May require add-ons</td></tr>
+        <tr><td>Support</td><td>✓ 24/7 assistance</td><td>Varies</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</section>
+
+<section>
+  <center><img width="640px" height="320px" src="images/payment-methode.jpeg" alt="">
+</section></center>
+
+<section class="container" id="countries">
+  <div class="center">
+    <h2 class="section-title">Countries Where TheLocalPay is Available</h2>
+    <p class="section-subtitle">Expand into new markets with payment support designed for international businesses.</p>
+  </div>
+  <div class="country-grid">
+    <div class="country"> <img class="flag" src="images/flag/bangladesh.png" alt=""> <center>Bangladesh</center> </div>
+    <div class="country"> <img class="flag" src="images/flag/malaysia.png" alt=""> <center>United States</center> </div>
+    <div class="country"> <img class="flag" src="images/flag/egypt.png" alt=""> <center>Egypt</center></div>
+    <div class="country"> <img class="flag" src="images/flag/india.png" alt=""> <center>India</center></div>
+    <div class="country"> <img class="flag" src="images/flag/saudi.png" alt=""> <center>Saudi Arabia</center></div>
+    <div class="country"> <img class="flag" src="images/flag/pakistan.png" alt=""> <center>Pakistan</center></div>
+    <div class="country"> <img class="flag" src="images/flag/uae.png" alt=""> <center>UAE</center></div>
+    <div class="country"> <img class="flag" src="images/flag/uk.png" alt=""> <center>UK</center></div>
+    <div class="country"> <img class="flag" src="images/flag/turkey.png" alt=""> </center><Turkiye></center></div>
+    <div class="country"> <img class="flag" src="images/flag/malaysia.png" alt=""> <center>Malaysia</center></div>
+    <div class="country"> <img class="flag" src="images/flag/singapur.png" alt=""> <center>Singapore</center></div>
+    <div class="country"> <img class="flag" src="images/flag/qatar.png" alt=""> <center>Qatar</center></div>
+    <div class="country"> <img class="flag" src="images/flag/kuwait.png" alt=""> <center>Kuwait</center></div>
+    <div class="country"> <img class="flag" src="images/flag/oman.png" alt=""> <center>Oman</center></div>
+    <div class="country"> <img class="flag" src="images/flag/bahrain.png" alt=""> <center>Bahrain</center></div>
+  </div>
+</section>
+
+<section class="section">
+<div class="container code-section">
+  <div class="copy">
+    <h2>Streamline Your Integration Process in Minutes</h2>
+    <p>Connect your store or application with a lightweight API and start accepting payments with a clean, developer-friendly workflow.</p>
+    <a class="btn btn-dark" href="#start">Explore API →</a>
+  </div>
+  <pre class="code"><code>const payment = await thelocalpay.createPayment({
+  amount: 2730,
+  currency: "USD",
+  customer: {
+    email: "customer@example.com"
+  },
+  returnUrl: "/success"
+});
+
+console.log(payment.status);</code></pre>
+</div>
+</section>
+
+<section class="container center">
+  <h2 class="section-title">Seamless Online Payment Solutions for Every Business</h2>
+  <p class="section-subtitle">Whether you are launching a new store or scaling an established platform, TheLocalPay provides the building blocks for modern payments.</p>
+</section>
+
+<section class="container cta" id="start">
+  <h2>Ready to Accept Online Payments?</h2>
+  <p>Launch your payment flow and start serving customers globally.</p>
+  <a class="btn btn-lime" href="https://t.me/thelocalpay">Contact US</a>
+  <a class="btn btn-dark" href="#faq">View FAQs</a>
+</section>
+
+<!-- <section class="section">
+<div class="container">
+  <div class="center"><h2 class="section-title">Stay Connected With TheLocalPay</h2></div>
+  <div class="social , center" >
+ <a class="btn" href="#">Telegram</a>
+  </div>
+</div>
+</section> -->
+
+<section class="section" id="faq">
+<div class="container">
+  <div class="center"><h2 class="section-title">Frequently Asked Questions</h2></div>
+  <div class="faq">
+    <div class="faq-item"><button class="faq-q">What is TheLocalPay? <span>+</span></button><div class="faq-a">TheLocalPay is an online payment platform concept for accepting and managing digital payments through one integration.</div></div>
+    <div class="faq-item"><button class="faq-q">What payment types are supported? <span>+</span></button><div class="faq-a">Depending on the market, a payment setup can include cards, wallets and local payment methods.</div></div>
+    <div class="faq-item"><button class="faq-q">How long does integration take? <span>+</span></button><div class="faq-a">A basic integration can be completed quickly when your application is already prepared to receive payment callbacks.</div></div>
+    <div class="faq-item"><button class="faq-q">Can I accept payments globally? <span>+</span></button><div class="faq-a">Availability depends on supported countries, payment methods, compliance requirements and your account configuration.</div></div>
+    <div class="faq-item"><button class="faq-q">Is TheLocalPay secure? <span>+</span></button><div class="faq-a">Use secure API communication, server-side validation, signed callbacks and appropriate payment-data handling for production systems.</div></div>
+    <div class="faq-item"><button class="faq-q">How are payments settled? <span>+</span></button><div class="faq-a">Settlement timing and currencies depend on the configured payment provider, country and merchant agreement.</div></div>
+  </div>
+</div>
+</section>
+
+<div class="bottom-bar">
+  <div class="container bottom-inner">
+    <strong>More payment methods means more opportunities.</strong>
+    <div><a class="btn btn-dark" href="#">Get Started</a> <a class="btn btn-lime" href="#">Contact Us</a></div>
+  </div>
+</div>
+</main>
+
+<footer>
+<div class="container footer-grid">
+  <div><h4>The Local Pay</h4><p>Modern payment infrastructure for businesses that want to sell beyond borders.</p></div>
+  <div><h4>Product</h4><a href="#features">Features</a><a href="#gateway">Payment methods</a><a href="#comparison">Compare</a></div>
+  <div><h4>Company</h4><a href="#">About</a><a href="https://t.me/thelocalpay">Contact</a><a href="#">Careers</a></div>
+  <div><h4>Resources</h4><a href="#faq">FAQ</a><a href="#">API Docs</a><a href="#">Support</a></div>
+</div>
+</footer>
+
+<script>
+document.querySelectorAll('.faq-q').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const item=btn.parentElement;
+    document.querySelectorAll('.faq-item').forEach(x=>{if(x!==item)x.classList.remove('open')});
+    item.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>
